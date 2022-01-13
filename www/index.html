@@ -54,29 +54,23 @@
         .then(function(results) {
           showResults(results);
         })
-
     }
-    function searchLevelGT() {
-      let level=parseInt($('#level').val());
+
+    function searchType(){
+      let type=$("#types").val();
       let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.greaterThan("level",level).fetchAll()
+      TestDataClass.equalTo("remarks",type).fetchAll()
         .then(function(results) {
           showResults(results);
         })
     }
-
     function showResults(results) {
-      if(results.length==-1){
-        let msg="データが見つかりませんでした。検索ワードを工夫してみてください。"
-
-      }
-      // テーブルのヘッダを生成
       let msg = "データが"+results.length+"件見つかりました。</br>";
       for (let i = 0; i < results.length; i++) {
        msg+="<strong>"+(i+1)+"件目</strong><br>";
-        // 各データを収めた表の列を生成
+       msg+="登場:"+results[i].part+"部<br>";
+       msg+="分類:"+results[i].remarks+"<br>";
         msg += "スタンド名:" + results[i].standname+"<br>";
-        msg+="分類:"+results[i].remarks+"<br>";
         msg += "スタンド使い名:" + results[i].mastername+"<br>";
         msg+="★スタンドパラメータ★<br>";
         msg += "破壊力:" + results[i].power+"<br>";
@@ -86,8 +80,6 @@
         msg += "精密動作性:" + results[i].precision+"<br>";
         msg += "成長性:" + results[i].potential+"<br>";
         
-
-      // テーブルのテイラを生成
       $("#message").html(msg);
     }
     }
@@ -105,7 +97,7 @@
     <input id="keyword" type="text" placeholder="連想キーワードを1つ入れてください">  </div>
   <div>
     <label for="standtype">type:</label>
-    <select name="example1">
+    <select name="types "id="types">
     <option value="遠隔操作型">遠隔操作型</option>
     <option value="物質融合型">物質融合型</option>
     <option value="群体型">群体型</option>
@@ -118,7 +110,7 @@
     <button class="btn" onclick="searchMaster()">スタンド使い名検索</button>
     <br>
     <button class="btn" onclick="searchKeyword()">キーワード検索</button>
-    <button class="btn" onclick="searchType()">分類検索</button>
+    <button class="btn" onclick="searchType()">タイプ検索</button>
   </div>
   <div id="message">検索結果がここに表示されます</div>
 </body>
