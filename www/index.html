@@ -39,16 +39,23 @@
           showResults(results);
         })
     }
-
-    function searchLevelLT() {
-      let level=parseInt($('#level').val());
+    function searchKeyword(){
+      let key=($('#keyword').val());
       let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.lessThan("level",level).fetchAll()
+      TestDataClass.equalTo("keyword1",key).fetchAll()
         .then(function(results) {
           showResults(results);
         })
-    }
+        TestDataClass.equalTo("keyword2",key).fetchAll()
+        .then(function(results) {
+          showResults(results);
+        })
+        TestDataClass.equalTo("keyword3",key).fetchAll()
+        .then(function(results) {
+          showResults(results);
+        })
 
+    }
     function searchLevelGT() {
       let level=parseInt($('#level').val());
       let TestDataClass = ncmb.DataStore(db);
@@ -59,6 +66,10 @@
     }
 
     function showResults(results) {
+      if(results.length==-1){
+        let msg="データが見つかりませんでした。検索ワードを工夫してみてください。"
+
+      }
       // テーブルのヘッダを生成
       let msg = "データが"+results.length+"件見つかりました。</br>";
       for (let i = 0; i < results.length; i++) {
@@ -87,10 +98,11 @@
   <h2>ジョジョサーチ</h2>
   <div>
     <label for="name">name:</label>
-    <input id="standname" type="text" placeholder="stand name">
+    <input id="standname" type="text" placeholder="スタンド名を入力してください">
     <label for="name">name:</label>
-    <input id="mastername" type="text" placeholder="master name">
-  </div>
+    <input id="mastername" type="text" placeholder="スタンド使い名を入力してください">
+    <label for="key">key:</label>
+    <input id="keyword" type="text" placeholder="連想キーワードを1つ入れてください">  </div>
   <div>
     <label for="standtype">type:</label>
     <select name="example1">
@@ -102,13 +114,13 @@
     </select>
   </div>
   <div id="button">
-    <button class="btn" onclick="searchStand()">stand</button>
-    <button class="btn" onclick="searchMaster()">master</button>
+    <button class="btn" onclick="searchStand()">スタンド検索</button>
+    <button class="btn" onclick="searchMaster()">スタンド使い名検索</button>
     <br>
-    <button class="btn" onclick="searchKeyword()">keyword</button>
-    <button class="btn" onclick="fetchAll()">test</button>
+    <button class="btn" onclick="searchKeyword()">キーワード検索</button>
+    <button class="btn" onclick="searchType()">分類検索</button>
   </div>
-  <div id="message">message area</div>
+  <div id="message">検索結果がここに表示されます</div>
 </body>
 
 </html>
