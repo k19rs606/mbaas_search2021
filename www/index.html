@@ -22,19 +22,19 @@
           showResults(results);
         })
     }
-     function searchName() {
-      let name=$('#name').val();
+     function searchStand() {
+      let standname=$('#standname').val();
       let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.equalTo("name",name).fetchAll()
+      TestDataClass.equalTo("standname",standname).fetchAll()
         .then(function(results) {
           showResults(results);
         })
     }
 
-    function searchLevel() {
-      let level=parseInt($('#level').val());
+    function searchMaster() {
+      let mastername=($('#mastername').val());
       let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.equalTo("level",level).fetchAll()
+      TestDataClass.equalTo("mastername",mastername).fetchAll()
         .then(function(results) {
           showResults(results);
         })
@@ -60,45 +60,53 @@
 
     function showResults(results) {
       // テーブルのヘッダを生成
-      let msg = "<table><tr><th>standname</th><th>mastername</th><th>power</th><th>speed</th><th>range</th><th>persistence</th><th>precision</th><th>potential</th><th>remarks</th></tr>";
+      let msg = "データが"+results.length+"件見つかりました。</br>";
       for (let i = 0; i < results.length; i++) {
+       msg+="<strong>"+(i+1)+"件目</strong><br>";
         // 各データを収めた表の列を生成
-        msg += "<tr>";
-        msg += "<td>" + results[i].standname + "</td>";
-        msg += "<td class='num'>" + results[i].mastername + "</td>";
-        msg += "<td class='num'>" + results[i].power + "</td>";
-        msg += "<td class='num'>" + results[i].speed + "</td>";
-        msg += "<td class='num'>" + results[i].range + "</td>";
-        msg += "<td class='num'>" + results[i].persistence + "</td>";
-        msg += "<td class='num'>" + results[i].precision + "</td>";
-        msg += "<td class='num'>" + results[i].potential + "</td>";
-        msg += "<td class='num'>" + results[i].remarks + "</td>";
-        msg += "</tr>";
-      }
+        msg += "スタンド名:" + results[i].standname+"<br>";
+        msg+="分類:"+results[i].remarks+"<br>";
+        msg += "スタンド使い名:" + results[i].mastername+"<br>";
+        msg+="★スタンドパラメータ★<br>";
+        msg += "破壊力:" + results[i].power+"<br>";
+        msg += "スピード:" + results[i].speed+"<br>";
+        msg += "射程距離:" + results[i].range+"<br>";
+        msg += "持続力:" + results[i].persistence+"<br>";
+        msg += "精密動作性:" + results[i].precision+"<br>";
+        msg += "成長性:" + results[i].potential+"<br>";
+        
+
       // テーブルのテイラを生成
-      msg += "</table>";
       $("#message").html(msg);
+    }
     }
   </script>
 </head>
 
 <body>
-  <h2>ジョジョの奇妙なスタンド達</h2>
+  <h2>ジョジョサーチ</h2>
   <div>
     <label for="name">name:</label>
-    <input id="name" type="text" placeholder="monster name">
+    <input id="standname" type="text" placeholder="stand name">
+    <label for="name">name:</label>
+    <input id="mastername" type="text" placeholder="master name">
   </div>
   <div>
-    <label for="level">level:</label>
-    <input id="level" type="number" placeholder="monster level">
+    <label for="standtype">type:</label>
+    <select name="example1">
+    <option value="遠隔操作型">遠隔操作型</option>
+    <option value="物質融合型">物質融合型</option>
+    <option value="群体型">群体型</option>
+    <option value="近距離パワー型">近距離パワー型</option>
+    <option value="特殊型">特殊型</option>
+    </select>
   </div>
   <div id="button">
-    <button class="btn" onclick="fetchAll()">Fetch All</button>
-    <button class="btn" onclick="searchName()">Name</button>
+    <button class="btn" onclick="searchStand()">stand</button>
+    <button class="btn" onclick="searchMaster()">master</button>
     <br>
-    <button class="btn" onclick="searchLevelLT()">Level &lt</button>
-     <button class="btn" onclick="searchLevel()">Level</button>
-      <button class="btn" onclick="searchLevelGT()">Level &gt</button>
+    <button class="btn" onclick="searchKeyword()">keyword</button>
+    <button class="btn" onclick="fetchAll()">test</button>
   </div>
   <div id="message">message area</div>
 </body>
