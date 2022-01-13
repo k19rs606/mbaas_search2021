@@ -1,9 +1,9 @@
 /**/
 body {
-  background-color: aqua;
+  background-color: #FFF8F3;
 }
-h1 {
-  background-color: yellow;
+h2 {
+  background-color: #FED1EF;
 }
 
 label {
@@ -28,13 +28,13 @@ input {
   height: 4ex;
   width: 5em;
   border-radius: 10px;
-  color: white;
-  background-color: blue;
+  color: #FFF8F3;
+  background-color: #A3E4DB;
 }
 
 #message {
   border-style: solid;
-  border-color: grey;
+  border-color: #1C6DD0;
 }
 
 table {
@@ -47,4 +47,8 @@ th, td {
 
 td.num {
   text-align: right;
+}
+h2{
+
+  Color:#0A1D37
 }
