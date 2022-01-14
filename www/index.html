@@ -15,13 +15,13 @@
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
     const db = "stands";
 
-    function fetchAll() {
+/*    function fetchAll() {
       let TestDataClass = ncmb.DataStore(db);
       TestDataClass.order("mastername",false).fetchAll()
         .then(function(results) {
           showResults(results);
         })
-    }
+    }*/
      function searchStand() {
       let standname=$('#standname').val();
       let TestDataClass = ncmb.DataStore(db);
@@ -42,15 +42,15 @@
     function searchKeyword(){
       let key=($('#keyword').val());
       let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.equalTo("keyword1",key).fetchAll()
+      TestDataClass.regularExpressionTo("keyword1",key).fetchAll()
         .then(function(results) {
           showResults(results);
         })
-        TestDataClass.equalTo("keyword2",key).fetchAll()
+        TestDataClass.regularExpressionTo("keyword2",key).fetchAll()
         .then(function(results) {
           showResults(results);
         })
-        TestDataClass.equalTo("keyword3",key).fetchAll()
+        TestDataClass.regularExpressionTo("keyword3",key).fetchAll()
         .then(function(results) {
           showResults(results);
         })
@@ -66,19 +66,20 @@
     }
     function showResults(results) {
       let msg = "データが"+results.length+"件見つかりました。</br>";
+      
       for (let i = 0; i < results.length; i++) {
-       msg+="<strong>"+(i+1)+"件目</strong><br>";
-       msg+="登場:"+results[i].part+"部<br>";
-       msg+="分類:"+results[i].remarks+"<br>";
-        msg += "スタンド名:" + results[i].standname+"<br>";
-        msg += "スタンド使い名:" + results[i].mastername+"<br>";
-        msg+="★スタンドパラメータ★<br>";
-        msg += "破壊力:" + results[i].power+"<br>";
-        msg += "スピード:" + results[i].speed+"<br>";
-        msg += "射程距離:" + results[i].range+"<br>";
-        msg += "持続力:" + results[i].persistence+"<br>";
-        msg += "精密動作性:" + results[i].precision+"<br>";
-        msg += "成長性:" + results[i].potential+"<br>";
+       msg+='<table><tr><th colspan="2">'+(i+1)+'件目</th></tr>';
+       msg+="<tr><th>登場</th><td>"+results[i].part+"部</td></tr>";
+       msg+="<tr><th>分類</th><td>"+results[i].remarks+"</td></tr>";
+       msg += "<tr><th>スタンド名</th><td>" + results[i].standname+"</td></tr>";
+       msg += "<tr><th>スタンド使い名</th><td>" + results[i].mastername+"</td></tr>";
+        msg+='<tr><th colspan="2">★スタンドパラメータ★</th><tr>';
+        msg += "<tr><th>破壊力</th><td>" + results[i].power+"</td></tr>";
+        msg += "<tr><th>スピード</th><td>" + results[i].speed+"</td></tr>";
+        msg += "<tr><th>射程距離</th><td>" + results[i].range+"</td></tr>";
+        msg += "<tr><th>持続力</th><td>" + results[i].persistence+"</td></tr>";
+        msg += "<tr><th>精密動作性</th><td>" + results[i].precision+"</td></tr>";
+        msg += "<tr><th>成長性</th><td>" + results[i].potential+"</td></tr></table>";
         
       $("#message").html(msg);
     }
